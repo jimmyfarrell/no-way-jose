@@ -8,12 +8,12 @@ app.config(function($stateProvider) {
 
 });
 
-app.controller('JoinCtrl', function($scope, $state, $q, $firebaseObject, GamePlay) {
+app.controller('JoinCtrl', function($scope, $state, $q, $firebaseObject, GameSetup) {
 
     $scope.formType = 'create';
 
     $scope.gameForm = {
-        gameId: GamePlay.gameIdGenerator(),
+        gameId: GameSetup.gameIdGenerator(),
         username: null
     };
 
@@ -21,14 +21,14 @@ app.controller('JoinCtrl', function($scope, $state, $q, $firebaseObject, GamePla
 
         $scope.formType = type;
 
-        if (type === 'create') $scope.gameForm.gameId = GamePlay.gameIdGenerator();
+        if (type === 'create') $scope.gameForm.gameId = GameSetup.gameIdGenerator();
         else $scope.gameForm.gameId = null;
 
     };
 
     $scope.goToGame = function(gameForm) {
 
-        var gameExists = GamePlay.doesGameExist(gameForm.gameId);
+        var gameExists = GameSetup.doesGameExist(gameForm.gameId);
 
 		if ($scope.formType === 'join' && !gameExists) {
 			$scope.error = 'Game ID does not exist. Try again or create a new game.';
@@ -36,10 +36,10 @@ app.controller('JoinCtrl', function($scope, $state, $q, $firebaseObject, GamePla
 			return;
 		}
 		else {
-			GamePlay.createNewGame(gameForm.gameId);
+			GameSetup.createNewGame(gameForm.gameId);
 		}
 
-		GamePlay.addUserToGame(gameForm.gameId, gameForm.username)
+		GameSetup.addUserToGame(gameForm.gameId, gameForm.username)
 		.then(function() {
 			$state.go('game', { gameId: gameForm.gameId });
 		});
