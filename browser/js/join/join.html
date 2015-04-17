@@ -4,7 +4,7 @@
 </ul>
 
 <div>
-    <form name="enterGameForm" ng-submit="goToGame(gameForm)">
+    <form name="enterGameForm" ng-submit="enterWaitingRoom(gameForm)">
         <span ng-if="error">{{ error }}<br /></span>
         Game ID: <br />
         <span ng-if="formType === 'create'">{{ gameForm.gameId }}</span>

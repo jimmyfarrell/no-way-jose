@@ -5,23 +5,21 @@ app.factory('GamePlay', function($firebaseObject, $firebaseArray) {
 	var allCards = $firebaseObject(cardsRef);
 
 	var setCurrentCard = function(currentCards) {
-		var randIndex;
 
-		currentCards.$loaded()
-		.then(function() {
-			currentCards.cardDeck = $firebaseArray(currentCards.$ref().child('cardDeck'));
-			return currentCards.cardDeck.$loaded();
-		})
-		.then(function() {
-			randIndex = Math.floor(Math.random() * currentCards.cardDeck.length);
+		var randomCard = getRandomCard(currentCards.cardDeck);
 
-			currentCards.currentCard = angular.copy(currentCards.cardDeck[randIndex]);
-			currentCards.currentCard.coins = 0;
-			return currentCards.cardDeck.$remove(randIndex);
-		})
-		.then(function() {
-			return currentCards.$save();
-		});
+		currentCards.currentCard = {};
+		currentCards.currentCard[randomCard] = { coins: 0 };
+		delete currentCards.cardDeck[randomCard];
+
+		return randomCard;
+		//.then(function() {
+			//currentCards.cardDeck = $firebaseArray(currentCards.$ref().child('cardDeck'));
+			//return currentCards.cardDeck.$loaded();
+		//})
+		//.then(function() {
+			//return currentCards.cardDeck.$remove(randIndex);
+		//});
 	};
 
 	return {
@@ -29,3 +27,12 @@ app.factory('GamePlay', function($firebaseObject, $firebaseArray) {
 	};
 
 });
+
+function getRandomCard(cardDeck) {
+    var randomCard;
+    var count = 0;
+    for (var card in cardDeck)
+        if (Math.random() < 1/++count)
+           randomCard = card;
+    return randomCard;
+}

@@ -5,7 +5,7 @@ app.directive('currentCard', function(GameSetup, GamePlay, $firebaseArray) {
 		templateUrl: 'js/common/directives/current-card/current-card.html',
 		link: function(scope, element, attrs) {
 
-			GamePlay.setCurrentCard(scope.currentCards);
+			scope.currentCardValue = GamePlay.setCurrentCard(scope.currentCards);
 
 		}
 	};

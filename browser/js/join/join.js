@@ -26,7 +26,7 @@ app.controller('JoinCtrl', function($scope, $state, $q, $firebaseObject, GameSet
 
     };
 
-    $scope.goToGame = function(gameForm) {
+    $scope.enterWaitingRoom = function(gameForm) {
 
         var gameExists = GameSetup.doesGameExist(gameForm.gameId);
 
@@ -41,7 +41,7 @@ app.controller('JoinCtrl', function($scope, $state, $q, $firebaseObject, GameSet
 
 		GameSetup.addUserToGame(gameForm.gameId, gameForm.username)
 		.then(function() {
-			$state.go('game', { gameId: gameForm.gameId });
+			$state.go('game.waitingRoom', { gameId: gameForm.gameId });
 		});
 
     };

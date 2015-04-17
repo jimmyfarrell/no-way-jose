@@ -1,6 +1,6 @@
 'use strict';
 
-app.factory('GameSetup', function($q, $firebaseObject, $firebaseArray) {
+app.factory('GameSetup', function($q, $firebaseObject) {
 
     var gamesRef = new Firebase('https://dazzling-torch-382.firebaseio.com/games');
     var cardsRef = new Firebase('https://dazzling-torch-382.firebaseio.com/cards');
@@ -20,12 +20,10 @@ app.factory('GameSetup', function($q, $firebaseObject, $firebaseArray) {
 
         var firstCard = 3;
         var lastCard = 35;
-        var cardDeck = [];
+        var cardDeck = {};
 
         for (var i = firstCard; i <= lastCard; i++) {
-            var card = { value: i };
-
-            cardDeck.push(card);
+            cardDeck[i] = { coins: 0 };
         }
 
         return cardDeck;
@@ -38,7 +36,10 @@ app.factory('GameSetup', function($q, $firebaseObject, $firebaseArray) {
 
     var createNewGame = function(gameId) {
 
-        var newGame = { startTime: Firebase.ServerValue.TIMESTAMP };
+        var newGame = {
+			status: 'waiting',
+			startTime: Firebase.ServerValue.TIMESTAMP
+		};
         var newCards = { cardDeck: createCardDeck() };
 
 		allGames[gameId] = newGame;
@@ -57,15 +58,30 @@ app.factory('GameSetup', function($q, $firebaseObject, $firebaseArray) {
 
     var addUserToGame = function(gameId, username) {
 
-        var newUser = { username: username, coins: '11' };
+		return allUsers.$loaded()
+		.then(function() {
 
-		if (!current.users) {
-			current.users = $firebaseArray(usersRef.child(gameId));
-		}
+			if (!allUsers[gameId]) {
+				allUsers[gameId] = {};
+				return allUsers.$save();
+			}
 
-		return current.users.$add(newUser)
-		.then(function(userRef) {
-			current.user = $firebaseObject(userRef);
+		})
+		.then(function() {
+			current.users = $firebaseObject(usersRef.child(gameId));
+			return current.users.$loaded();
+		})
+		.then(function() {
+
+			current.users[username] = { coins: 11 };
+			return current.users.$save();
+
+		})
+		.then(function() {
+
+			current.user = $firebaseObject(current.users.$ref().child(username));
+			return current.user.$loaded();
+
 		});
 
     };
