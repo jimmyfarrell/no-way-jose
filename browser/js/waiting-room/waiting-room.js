@@ -9,11 +9,17 @@ app.config(function($stateProvider) {
 
 });
 
-app.controller('WaitingRoomCtrl', function($scope, $state) {
+app.controller('WaitingRoomCtrl', function($scope, $state, GameSetup, GamePlay) {
 
 	$scope.goToGame = function() {
+		GamePlay.setPlayOrder($scope.currentUsers);
+		GamePlay.setCurrentCard($scope.currentCards);
 		$scope.currentGame.status = 'playing';
-		$state.go('^.gameRoom');
 	};
+
+	$scope.$watch('currentGame.status', function(newStatus, oldStatus) {
+		if (newStatus === 'playing' && oldStatus === 'waiting')
+			$state.go('^.gameRoom');
+	});
 
 });

@@ -16,6 +16,17 @@ app.factory('GameSetup', function($q, $firebaseObject) {
         return (Math.random() + 1).toString(36).slice(2, 7);
     };
 
+    var doesGameExist = function(gameId) {
+		return allGames.$loaded()
+		.then(function() {
+			return allGames[gameId];
+		});
+    };
+
+	var gameInProgress = function(gameId) {
+		return allGames[gameId].status === 'playing';
+	};
+
     var createCardDeck = function() {
 
         var firstCard = 3;
@@ -23,18 +34,17 @@ app.factory('GameSetup', function($q, $firebaseObject) {
         var cardDeck = {};
 
         for (var i = firstCard; i <= lastCard; i++) {
-            cardDeck[i] = { coins: 0 };
+            cardDeck[i] = {
+				value: i,
+				coins: 0
+			};
         }
 
         return cardDeck;
 
     };
 
-    var doesGameExist = function(gameId) {
-		return allGames[gameId];
-    };
-
-    var createNewGame = function(gameId) {
+    var createAndLoadGame = function(gameId) {
 
         var newGame = {
 			status: 'waiting',
@@ -42,19 +52,44 @@ app.factory('GameSetup', function($q, $firebaseObject) {
 		};
         var newCards = { cardDeck: createCardDeck() };
 
+		var gamesAndCardsPromises = [];
 		allGames[gameId] = newGame;
 		allGames.$save()
 		.then(function(gamesRef) {
 			current.game = $firebaseObject(gamesRef.child(gameId));
+			gamesAndCardsPromises.push(current.game.$loaded());
 		});
 
 		allCards[gameId] = newCards;
 		allCards.$save()
 		.then(function(cardsRef) {
 			current.cards = $firebaseObject(cardsRef.child(gameId));
+			gamesAndCardsPromises.push(current.cards.$loaded());
+		});
+
+		return $q.all(gamesAndCardsPromises)
+		.then(function() {
+			return loadGame(gameId);
 		});
 
     };
+
+	var loadGame = function(gameId) {
+
+		return allGames.$loaded()
+		.then(function() {
+			current.game = $firebaseObject(gamesRef.child(gameId));
+			return current.game.$loaded();
+		})
+		.then(function() {
+			return allCards.$loaded();
+		})
+		.then(function() {
+			current.cards = $firebaseObject(cardsRef.child(gameId));
+			return current.cards.$loaded();
+		});
+
+	};
 
     var addUserToGame = function(gameId, username) {
 
@@ -68,12 +103,20 @@ app.factory('GameSetup', function($q, $firebaseObject) {
 
 		})
 		.then(function() {
+
 			current.users = $firebaseObject(usersRef.child(gameId));
 			return current.users.$loaded();
+
 		})
 		.then(function() {
 
-			current.users[username] = { coins: 11 };
+			current.users[username] = {
+				username,
+				coins: 11,
+				active: false,
+				order: 0
+			};
+
 			return current.users.$save();
 
 		})
@@ -87,11 +130,13 @@ app.factory('GameSetup', function($q, $firebaseObject) {
     };
 
     return {
-        gameIdGenerator: gameIdGenerator,
-        doesGameExist: doesGameExist,
-        createNewGame: createNewGame,
-        addUserToGame: addUserToGame,
-		current: current
+        gameIdGenerator,
+        doesGameExist,
+		gameInProgress,
+        createAndLoadGame,
+		loadGame,
+        addUserToGame,
+		current
     };
 
 });

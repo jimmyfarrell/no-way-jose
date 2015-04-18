@@ -1,38 +1,53 @@
 'use strict';
-app.factory('GamePlay', function($firebaseObject, $firebaseArray) {
-
-    var cardsRef = new Firebase('https://dazzling-torch-382.firebaseio.com/cards');
-	var allCards = $firebaseObject(cardsRef);
+app.factory('GamePlay', function($firebaseObject, GameSetup) {
 
 	var setCurrentCard = function(currentCards) {
 
 		var randomCard = getRandomCard(currentCards.cardDeck);
 
-		currentCards.currentCard = {};
-		currentCards.currentCard[randomCard] = { coins: 0 };
+		currentCards.currentCard = {
+			value: randomCard,
+			coins: 0
+		};
+
 		delete currentCards.cardDeck[randomCard];
 
-		return randomCard;
-		//.then(function() {
-			//currentCards.cardDeck = $firebaseArray(currentCards.$ref().child('cardDeck'));
-			//return currentCards.cardDeck.$loaded();
-		//})
-		//.then(function() {
-			//return currentCards.cardDeck.$remove(randIndex);
-		//});
+		function getRandomCard(cardDeck) {
+			var randomCard;
+			var count = 0;
+
+			for (var card in cardDeck) {
+				if (Math.random() < 1/++count) randomCard = card;
+			}
+
+			return randomCard;
+		}
+
+	};
+
+	var setPlayOrder = function(currentUsers) {
+
+		var playerCount = 0;
+		angular.forEach(currentUsers, function(userInfo, user) {
+			if (user.indexOf('$') < 0) playerCount++;
+		});
+
+		var orderArr = [];
+		angular.forEach(currentUsers, function(userInfo, user) {
+			if (user.indexOf('$') < 0) {
+				var order = Math.floor(Math.random() * playerCount) + 1;
+				while (orderArr.indexOf(order) < 0) {
+					userInfo.order = order;
+					orderArr.push(order);
+				}
+			}
+		});
+
 	};
 
 	return {
-		setCurrentCard: setCurrentCard
+		setCurrentCard,
+		setPlayOrder
 	};
 
 });
-
-function getRandomCard(cardDeck) {
-    var randomCard;
-    var count = 0;
-    for (var card in cardDeck)
-        if (Math.random() < 1/++count)
-           randomCard = card;
-    return randomCard;
-}

@@ -5,3 +5,7 @@
 <button ng-click="placeCoin()">No Way, Jose!</button>
 
 <h2>Your Coins: {{ currentUser.coins }}</h2>
+
+<ul>
+	<li ng-repeat="(card, obj) in currentUser.cards">{{card}}</li>
+</ul>

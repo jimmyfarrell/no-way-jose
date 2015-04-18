@@ -1,0 +1,6 @@
+<div>
+	<ul>
+		<li ng-repeat="user in users | orderObjectBy:'order'">
+		{{ user.username }}: <span ng-if="user.cards" ng-repeat="card in user.cards | orderObjectBy:'value'"> {{ card.value }} </span></li>
+	</ul>
+</div>
