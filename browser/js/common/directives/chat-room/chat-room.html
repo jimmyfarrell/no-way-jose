@@ -1,7 +1,7 @@
 <div>
 	<ul>
-		<li ng-repeat="message in currentChat">
-		{{ message.username }}: {{ message.text }}
+		<li ng-repeat="message in currentChat" ng-class="{ 'system-message': message.system }">
+		<strong>{{ message.username }}:</strong> {{ message.text }}
 		</li>
 	</ul>
 </div>
@@ -9,4 +9,3 @@
 	<input name="text" ng-model="messageText"/>
 	<button>Send</button>
 </form>
-{{ messageText }}

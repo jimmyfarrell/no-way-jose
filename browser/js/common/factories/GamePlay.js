@@ -1,5 +1,5 @@
 'use strict';
-app.factory('GamePlay', function(GameSetup) {
+app.factory('GamePlay', function() {
 
 	var setCurrentCard = function(currentCards) {
 
@@ -27,35 +27,46 @@ app.factory('GamePlay', function(GameSetup) {
 
 	var setPlayOrder = function(currentGame, currentUsers) {
 
+		var playerCount = 0;
 		angular.forEach(currentUsers, function(userInfo, user) {
-			if (user.indexOf('$') < 0) currentGame.playerCount++;
+			if (user.indexOf('$') < 0) playerCount++;
 		});
 
 		var orderArr = [];
-		for (var i = 0; i < currentGame.playerCount; i++) orderArr[i] = i + 1;
+		var activePlayer = '';
+		for (var i = 0; i < playerCount; i++) orderArr[i] = i + 1;
 		angular.forEach(currentUsers, function(userInfo, user) {
 			if (user.indexOf('$') < 0) {
 				var orderIndex = Math.floor(Math.random() * orderArr.length);
+				if (orderArr[orderIndex] === 1) activePlayer = userInfo.username;
 				userInfo.order = orderArr.splice(orderIndex, 1)[0];
 			}
 		});
+
+		currentGame.playerCount = playerCount;
+		currentGame.activePlayer = activePlayer;
+		currentGame.status = 'playing';
 
 	};
 
 	var setActivePlayer = function(currentGame, currentUsers) {
 
-		var newOrder;
-		if (!currentGame.activePlayer) newOrder = 1;
-		else newOrder = currentUsers[currentGame.activePlayer].order + 1;
+		console.log('in here')
+		var newOrder = currentUsers[currentGame.activePlayer].order + 1;
+		console.log(currentGame.activePlayer)
 		if (newOrder > currentGame.playerCount) newOrder = 1;
 
+		var activePlayer = '';
 		angular.forEach(currentUsers, function(userInfo, user) {
 			if (user.indexOf('$') < 0) {
 				if (userInfo.order === newOrder) {
-					currentGame.activePlayer = userInfo.username;
+					activePlayer = userInfo.username;
 				}
 			}
 		});
+
+		console.log(activePlayer)
+		currentGame.activePlayer = activePlayer;
 
 	};
 

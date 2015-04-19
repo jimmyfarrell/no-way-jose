@@ -38,19 +38,28 @@ app.controller('PlayCtrl', function($scope, $state, $q, $firebaseObject, GameSet
 					var playing = GameSetup.gameInProgress(gameForm.gameId);
 
 					if (playing) throw 'Game is already in progress.';
-					else return GameSetup.loadGame(gameForm.gameId);
+					else {
+						var loadPromises = [
+							GameSetup.loadChat(gameForm.gameId),
+							GameSetup.loadGame(gameForm.gameId)
+						];
+
+						return $q.all(loadPromises);
+					}
 				}
 			}
 			else {
-				return GameSetup.createAndLoadGame(gameForm.gameId);
+				var createAndLoadPromises = [
+					GameSetup.createAndLoadChat(gameForm.gameId),
+					GameSetup.createAndLoadGame(gameForm.gameId)
+				];
+
+				return $q.all(createAndLoadPromises);
 			}
 		})
 		.then(function() {
 			if (!gameForm.username) throw 'Please enter a valid username.';
 			return GameSetup.addUserToGame(gameForm.gameId, gameForm.username);
-		})
-		.then(function() {
-			return GameSetup.createChatRoom(gameForm.gameId);
 		})
 		.then(function() {
 			$state.go('game.waitingRoom', { gameId: gameForm.gameId });

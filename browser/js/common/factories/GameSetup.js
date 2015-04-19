@@ -50,7 +50,6 @@ app.factory('GameSetup', function($q, $firebaseObject) {
 			cardsArr.splice(randIndex, 1);
 		}
 
-		console.log(cardDeck);
         return cardDeck;
 
     };
@@ -141,27 +140,31 @@ app.factory('GameSetup', function($q, $firebaseObject) {
 
     };
 
-	var createChatRoom = function(gameId) {
+	var createAndLoadChat = function(gameId) {
+
+		var timestamp = Date.now();
+		var firstMessage = {};
+		firstMessage[timestamp] = {
+			username: 'No Way, Jose',
+			system: true,
+			text: 'Welcome to the chat room. You can chat while waiting for your friends to join and while playing the game.',
+			timestamp: Date.now()
+		};
+		allChats[gameId] = firstMessage;
+
+		return allChats.$save()
+		.then(function() {
+			return loadChat(gameId);
+		});
+
+	};
+
+	var loadChat = function(gameId) {
 
 		return allChats.$loaded()
 		.then(function() {
-
-			var timestamp = Date.now();
-			var firstMessage = {};
-			firstMessage[timestamp] = {
-				username: 'MrRoboto',
-				text: 'Welcome to the chat room.',
-				timestamp: Date.now()
-			};
-			allChats[gameId] = firstMessage;
-			return allChats.$save();
-
-		})
-		.then(function() {
-
 			current.chat = $firebaseObject(chatsRef.child(gameId));
 			return current.chat.$loaded();
-
 		});
 
 	};
@@ -171,9 +174,10 @@ app.factory('GameSetup', function($q, $firebaseObject) {
         doesGameExist,
 		gameInProgress,
         createAndLoadGame,
+		createAndLoadChat,
 		loadGame,
+		loadChat,
         addUserToGame,
-		createChatRoom,
 		current
     };
 
