@@ -17,8 +17,9 @@
 	<script src="https://cdn.firebase.com/libs/angularfire/1.0.0/angularfire.min.js"></script>
     <script src="/main.js"></script>
 </head>
-<body ng-app="FullstackGeneratedApp">
+<body ng-app="FullstackGeneratedApp" ng-controller="MainCtrl">
     <navbar></navbar>
-    <div ui-view></div>
+	<sidebar ng-show="sidebar.show"></sidebar>
+	<div ui-view ng-class="{ 'main-page': sidebar.show, 'no-sidebar': !sidebar.show }"></div>
 </body>
 </html>

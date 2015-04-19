@@ -42,6 +42,15 @@ app.factory('GameSetup', function($q, $firebaseObject) {
 			};
         }
 
+		var cardsArr = Object.keys(cardDeck);
+		for (var j = 0; j < 9; j++) {
+			var randIndex = Math.floor(Math.random() * cardsArr.length);
+			var removeCard = cardsArr[randIndex];
+			delete cardDeck[removeCard];
+			cardsArr.splice(randIndex, 1);
+		}
+
+		console.log(cardDeck);
         return cardDeck;
 
     };

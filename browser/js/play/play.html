@@ -1,0 +1,18 @@
+<div>
+	<ul class="nav nav-pills join-create">
+		<li role="presentation" ng-class="{ active: formType === 'create' }" ng-click="setFormType('create')"><a href="#">Create A New Game</a></li>
+		<li role="presentation" ng-class="{ active: formType === 'join' }" ng-click="setFormType('join')"><a href="#">Join An Existing Game</a></li>
+	</ul>
+
+	<div>
+		<form name="enterGameForm" ng-submit="enterWaitingRoom(gameForm)">
+			<span ng-if="error">{{ error }}<br /></span>
+			Game ID: <span ng-if="formType === 'create'">{{ gameForm.gameId }}</span>
+			<input name="gameId" ng-if="formType === 'join'" ng-model="gameForm.gameId" /><br />
+			Username:
+			<input name="username" ng-model="gameForm.username" /><br />
+			<button ng-if="formType === 'join'">Join Game</button>
+			<button ng-if="formType === 'create'">Create Game</button>
+		</form>
+	</div>
+</div>

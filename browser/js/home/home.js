@@ -5,3 +5,6 @@ app.config(function ($stateProvider) {
         templateUrl: 'js/home/home.html'
     });
 });
+
+app.controller('HomeCtrl', function($scope, $state, Sidebar) {
+});

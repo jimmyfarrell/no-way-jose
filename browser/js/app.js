@@ -1,5 +1,5 @@
 'use strict';
-var app = angular.module('FullstackGeneratedApp', ['ui.router', 'fsaPreBuilt', 'firebase', 'angular-toArrayFilter', 'ngOrderObjectBy']);
+var app = angular.module('FullstackGeneratedApp', ['ui.router', 'fsaPreBuilt', 'firebase']);
 
 app.config(function ($urlRouterProvider, $locationProvider) {
     // This turns off hashbang urls (/#about) and changes it to something normal (/about)
@@ -47,5 +47,11 @@ app.run(function ($rootScope, AuthService, $state) {
         });
 
     });
+
+});
+
+app.controller('MainCtrl', function($scope, Sidebar) {
+
+	$scope.sidebar = Sidebar.sidebar;
 
 });

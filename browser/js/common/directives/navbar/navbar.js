@@ -1,5 +1,5 @@
 'use strict';
-app.directive('navbar', function ($rootScope, AuthService, AUTH_EVENTS, $state) {
+app.directive('navbar', function ($rootScope, AuthService, AUTH_EVENTS, $state, Sidebar) {
 
     return {
         restrict: 'E',
@@ -7,11 +7,17 @@ app.directive('navbar', function ($rootScope, AuthService, AUTH_EVENTS, $state) 
         templateUrl: 'js/common/directives/navbar/navbar.html',
         link: function (scope) {
 
+			scope.sidebar = Sidebar.sidebar;
+
+			scope.toggleSidebar = function() {
+				if (scope.sidebar.show) scope.sidebar.show = false;
+				else scope.sidebar.show = true;
+			};
+
             scope.items = [
                 { label: 'Home', state: 'home' },
                 { label: 'About', state: 'about' },
-                { label: 'Tutorial', state: 'tutorial' },
-                { label: 'Join', state: 'join'},
+                { label: 'Play', state: 'play'},
                 { label: 'Members Only', state: 'membersOnly', auth: true }
             ];
 

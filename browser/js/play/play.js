@@ -1,14 +1,14 @@
 app.config(function($stateProvider) {
 
-    $stateProvider.state('join', {
-        url: '/join',
-        templateUrl: 'js/join/join.html',
-        controller: 'JoinCtrl'
+    $stateProvider.state('play', {
+        url: '/play',
+        templateUrl: 'js/play/play.html',
+        controller: 'PlayCtrl'
     });
 
 });
 
-app.controller('JoinCtrl', function($scope, $state, $q, $firebaseObject, GameSetup) {
+app.controller('PlayCtrl', function($scope, $state, $q, $firebaseObject, GameSetup) {
 
     $scope.formType = 'create';
 
