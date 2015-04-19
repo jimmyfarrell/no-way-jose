@@ -1,13 +1,11 @@
+<h1 ng-if="currentGame.activePlayer !== currentUser.username">{{ currentGame.activePlayer }}'s Turn</h1>
+<h1 ng-if="currentGame.activePlayer === currentUser.username">Your Turn</h1>
 <current-card></current-card>
 
 <div ng-if="currentGame.activePlayer === currentUser.username">
 	<h1>Take This Card?</h1>
 	<button ng-click="takeCard()">Yup!</button>
 	<button ng-click="placeCoin()">No Way, Jose!</button>
-</div>
-
-<div ng-if="currentGame.activePlayer !== currentUser.username">
-	<h1>Waiting For Your Turn...</h1>
 </div>
 
 <h2>Your Coins: {{ currentUser.coins }}</h2>

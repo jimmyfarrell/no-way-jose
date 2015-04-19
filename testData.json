@@ -91,7 +91,7 @@
             }]
         }
     },
-    
+
     "users":
     {
         "test1":
@@ -137,5 +137,17 @@
                 "value": "34"
             }]
         }]
-    }
+    },
+
+	"chats":
+	{
+		"test1":
+		{
+			"message1":
+			{
+				"username": "jimmy",
+				"text": "what's up?"
+			}
+		}
+	}
 }

@@ -49,7 +49,10 @@ app.controller('JoinCtrl', function($scope, $state, $q, $firebaseObject, GameSet
 			if (!gameForm.username) throw 'Please enter a valid username.';
 			return GameSetup.addUserToGame(gameForm.gameId, gameForm.username);
 		})
-		.then(function(addUserPromise) {
+		.then(function() {
+			return GameSetup.createChatRoom(gameForm.gameId);
+		})
+		.then(function() {
 			$state.go('game.waitingRoom', { gameId: gameForm.gameId });
 		})
 		.catch(function(error) {

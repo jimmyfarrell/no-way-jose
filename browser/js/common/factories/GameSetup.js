@@ -5,10 +5,12 @@ app.factory('GameSetup', function($q, $firebaseObject) {
     var gamesRef = new Firebase('https://dazzling-torch-382.firebaseio.com/games');
     var cardsRef = new Firebase('https://dazzling-torch-382.firebaseio.com/cards');
     var usersRef = new Firebase('https://dazzling-torch-382.firebaseio.com/users');
+	var chatsRef = new Firebase('https://dazzling-torch-382.firebaseio.com/chats');
 
 	var allGames = $firebaseObject(gamesRef);
 	var allCards = $firebaseObject(cardsRef);
 	var allUsers = $firebaseObject(usersRef);
+	var allChats = $firebaseObject(chatsRef);
 
     var current = {};
 
@@ -130,6 +132,31 @@ app.factory('GameSetup', function($q, $firebaseObject) {
 
     };
 
+	var createChatRoom = function(gameId) {
+
+		return allChats.$loaded()
+		.then(function() {
+
+			var timestamp = Date.now();
+			var firstMessage = {};
+			firstMessage[timestamp] = {
+				username: 'MrRoboto',
+				text: 'Welcome to the chat room.',
+				timestamp: Date.now()
+			};
+			allChats[gameId] = firstMessage;
+			return allChats.$save();
+
+		})
+		.then(function() {
+
+			current.chat = $firebaseObject(chatsRef.child(gameId));
+			return current.chat.$loaded();
+
+		});
+
+	};
+
     return {
         gameIdGenerator,
         doesGameExist,
@@ -137,6 +164,7 @@ app.factory('GameSetup', function($q, $firebaseObject) {
         createAndLoadGame,
 		loadGame,
         addUserToGame,
+		createChatRoom,
 		current
     };
 

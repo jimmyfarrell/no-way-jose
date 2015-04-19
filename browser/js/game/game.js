@@ -17,5 +17,6 @@ app.controller('GameCtrl', function($scope, $stateParams, GameSetup) {
 	GameSetup.current.cards.$bindTo($scope, 'currentCards');
 	GameSetup.current.users.$bindTo($scope, 'currentUsers');
 	GameSetup.current.user.$bindTo($scope, 'currentUser');
+	GameSetup.current.chat.$bindTo($scope, 'currentChat');
 
 });

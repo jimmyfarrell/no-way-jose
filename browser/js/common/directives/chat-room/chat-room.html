@@ -1,0 +1,12 @@
+<div>
+	<ul>
+		<li ng-repeat="message in currentChat">
+		{{ message.username }}: {{ message.text }}
+		</li>
+	</ul>
+</div>
+<form name="chatForm" ng-submit="sendMessage(messageText)">
+	<input name="text" ng-model="messageText"/>
+	<button>Send</button>
+</form>
+{{ messageText }}
