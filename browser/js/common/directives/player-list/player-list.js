@@ -23,6 +23,7 @@ app.directive('playerList', function(GameSetup) {
 			});
 
 			scope.users = users;
+			console.log(scope.users)
 
 		});
 

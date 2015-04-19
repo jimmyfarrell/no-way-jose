@@ -1,6 +1,6 @@
 <div>
 	<ul>
-		<li ng-repeat="user in users | orderObjectBy:'order'">
-		{{ user.username }}: <span ng-if="user.cards" ng-repeat="card in user.cards | orderObjectBy:'value'"> {{ card.value }} </span></li>
+		<li ng-repeat="user in users | orderObjectBy:'order':false:currentGame.status">
+		<span ng-if="currentGame.status === 'playing'">Player {{ user.order }} - </span>{{ user.username }}: <span ng-if="user.cards" ng-repeat="card in user.cards | orderObjectBy:'value'"> {{ card.value }} </span></li>
 	</ul>
 </div>

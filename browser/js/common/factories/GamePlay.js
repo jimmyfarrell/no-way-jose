@@ -33,15 +33,14 @@ app.factory('GamePlay', function($firebaseObject, GameSetup) {
 		});
 
 		var orderArr = [];
+		for (var i = 0; i < playerCount; i++) orderArr[i] = i + 1;
 		angular.forEach(currentUsers, function(userInfo, user) {
 			if (user.indexOf('$') < 0) {
-				var order = Math.floor(Math.random() * playerCount) + 1;
-				while (orderArr.indexOf(order) < 0) {
-					userInfo.order = order;
-					orderArr.push(order);
-				}
+				var orderIndex = Math.floor(Math.random() * orderArr.length);
+				userInfo.order = orderArr.splice(orderIndex, 1)[0];
 			}
 		});
+		console.log(currentUsers)
 
 	};
 

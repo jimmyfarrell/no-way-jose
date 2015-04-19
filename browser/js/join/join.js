@@ -28,42 +28,25 @@ app.controller('JoinCtrl', function($scope, $state, $q, $firebaseObject, GameSet
 
     $scope.enterWaitingRoom = function(gameForm) {
 
-		function joiningExistingGame() {
-			var gameExists = GameSetup.doesGameExist(gameForm.gameId);
-		}
-
-		function joinOrCreate() {
-			if ($scope.formType === 'join') {
-			}
-		}
-
 		GameSetup.doesGameExist(gameForm.gameId)
 		.then(function(gameExists) {
 			if ($scope.formType === 'join') {
-
 				if (!gameExists) {
 					throw 'Game ID does not exist.';
 				}
-
 				else {
 					var playing = GameSetup.gameInProgress(gameForm.gameId);
 
 					if (playing) throw 'Game is already in progress.';
 					else return GameSetup.loadGame(gameForm.gameId);
 				}
-
 			}
-
 			else {
 				return GameSetup.createAndLoadGame(gameForm.gameId);
 			}
-
-			if (!gameExists && $scope.formType === 'join') {
-				throw 'Game ID does not exists. Try again or create a new game.';
-			}
-			return joinOrCreate();
 		})
 		.then(function() {
+			if (!gameForm.username) throw 'Please enter a valid username.';
 			return GameSetup.addUserToGame(gameForm.gameId, gameForm.username);
 		})
 		.then(function(addUserPromise) {
