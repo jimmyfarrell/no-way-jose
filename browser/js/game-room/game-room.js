@@ -17,6 +17,7 @@ app.controller('GameRoomCtrl', function($scope, GamePlay) {
 		if (!$scope.currentUser.cards) $scope.currentUser.cards = {};
 		$scope.currentUser.cards[$scope.currentCards.currentCard.value] = $scope.currentCards.currentCard;
 		GamePlay.setCurrentCard($scope.currentCards);
+		GamePlay.setActivePlayer($scope.currentGame, $scope.currentUsers);
 
 	};
 
@@ -24,6 +25,7 @@ app.controller('GameRoomCtrl', function($scope, GamePlay) {
 
 		$scope.currentCards.currentCard.coins = Number($scope.currentCards.currentCard.coins) + 1;
 		$scope.currentUser.coins = Number($scope.currentUser.coins) - 1;
+		GamePlay.setActivePlayer($scope.currentGame, $scope.currentUsers);
 
 	};
 

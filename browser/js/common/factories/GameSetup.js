@@ -48,6 +48,8 @@ app.factory('GameSetup', function($q, $firebaseObject) {
 
         var newGame = {
 			status: 'waiting',
+			playerCount: 0,
+			activePlayer: null,
 			startTime: Firebase.ServerValue.TIMESTAMP
 		};
         var newCards = { cardDeck: createCardDeck() };
@@ -113,7 +115,6 @@ app.factory('GameSetup', function($q, $firebaseObject) {
 			current.users[username] = {
 				username,
 				coins: 11,
-				active: false,
 				order: 0
 			};
 

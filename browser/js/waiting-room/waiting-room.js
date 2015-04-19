@@ -9,15 +9,15 @@ app.config(function($stateProvider) {
 
 });
 
-app.controller('WaitingRoomCtrl', function($scope, $state, GameSetup, GamePlay) {
+app.controller('WaitingRoomCtrl', function($scope, $state, GamePlay) {
 
 	$scope.goToGame = function() {
-		GamePlay.setPlayOrder($scope.currentUsers);
+		GamePlay.setPlayOrder($scope.currentGame, $scope.currentUsers);
 		GamePlay.setCurrentCard($scope.currentCards);
+		GamePlay.setActivePlayer($scope.currentGame, $scope.currentUsers);
 	};
 
 	$scope.$watch('currentUsers', function(newUsers, oldUsers) {
-		console.log(newUsers);
 		var userOrdersArr = [];
 
 		angular.forEach(newUsers, function(userInfo, user) {
