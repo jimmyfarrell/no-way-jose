@@ -9,7 +9,7 @@ app.config(function($stateProvider) {
 
 });
 
-app.controller('WaitingRoomCtrl', function($scope, $state, GamePlay) {
+app.controller('WaitingRoomCtrl', function($scope, $state, $window, GamePlay) {
 
 	$scope.goToGame = function() {
 		GamePlay.setPlayOrder($scope.currentGame, $scope.currentUsers);
@@ -28,7 +28,10 @@ app.controller('WaitingRoomCtrl', function($scope, $state, GamePlay) {
 	});
 
 	$scope.$watch('currentGame.status', function(newStatus, oldStatus) {
-		if (newStatus === 'playing' && oldStatus === 'waiting') $state.go('^.gameRoom');
+		if (newStatus === 'playing' && oldStatus === 'waiting') {
+			$window.alert('All players have joined. Entering the game room.');
+			$state.go('^.gameRoom');
+		}
 	});
 
 });
