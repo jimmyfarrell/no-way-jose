@@ -49,7 +49,6 @@ app.factory('GamePlay', function(GameSetup) {
 		else newOrder = currentUsers[currentGame.activePlayer].order + 1;
 		if (newOrder > currentGame.playerCount) newOrder = 1;
 
-		console.log(newOrder);
 		angular.forEach(currentUsers, function(userInfo, user) {
 			if (user.indexOf('$') < 0) {
 				if (userInfo.order === newOrder) {

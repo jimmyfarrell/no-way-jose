@@ -1,0 +1,16 @@
++ prevent other players from joining once the game has started
+- card actions only display for active player
+- waiting screen shows for other players
++ roll die to determine playing order during waiting
+- alert message to players to enter game room
++ player-list is ordered in play order
++ player-list shows other players' cards
+- message at top shows action of previous player
+- cards look like cards
+- placing a coin adds a coin graphic next to card
+- players' cards are grouped by sequence
+- scoring
+
+
+
+- chat room
