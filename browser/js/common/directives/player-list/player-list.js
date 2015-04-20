@@ -13,29 +13,12 @@ app.directive('playerList', function(GameSetup) {
 					if (user.indexOf('$') < 0) {
 						if (userInfo.cards) {
 
-							let userCards = [];
+							var userCards = [];
 							angular.forEach(userInfo.cards, function(cardInfo, card) {
 								userCards.push(parseInt(cardInfo.value));
 							});
-							userCards = userCards.sort();
-
-							let groupedCards = [];
-							console.log('userCards', userCards)
-							while (userCards.length > 1) {
-								let searchValue = userCards.shift();
-								let group = [searchValue];
-								while (userCards[0] - searchValue === 1) {
-									var searchValue = userCards.shift();
-									group.push(searchValue);
-								}
-								console.log('group', group)
-								groupedCards.push(group);
-							}
-							console.log('userCards #2', userCards)
-							console.log('groupedCards #1', groupedCards)
-							if (userCards.length) groupedCards.push(userCards);
-							console.log(groupedCards)
-							scope.groupedCards = groupedCards;
+							var sortedCards = userCards.sort((a, b) => a - b);
+							userInfo.groupedCards = groupCards(sortedCards);
 
 						}
 						users[user] = userInfo;
@@ -45,6 +28,32 @@ app.directive('playerList', function(GameSetup) {
 				scope.users = users;
 
 			});
+
+			var groupCards = function(userCards) {
+				console.log('userCards', userCards)
+				var groupedCards = [];
+
+				while (userCards.length > 1) {
+					var group = [];
+					var searchValue = userCards.shift();
+					group.push(searchValue);
+
+					while (userCards.length && userCards[0] - searchValue === 1) {
+						console.log('searchValue', searchValue)
+						searchValue = userCards.shift();
+						group.push(searchValue);
+					}
+
+					console.log('group', group)
+					groupedCards.push(group);
+				}
+
+				console.log('userCards 2', userCards)
+				if (userCards.length) groupedCards.push(userCards);
+				console.log(groupedCards)
+
+				return groupedCards;
+			};
 
 		}
 	};

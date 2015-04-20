@@ -1,5 +1,11 @@
-chat-room ul {
-	list-style-type: none;
+chat-room {
+	ul {
+		text-align: left;
+		list-style-type: none;
+	}
+	.even-message {
+		background: #DCDCDC;
+	}
 }
 
 .system-message {
