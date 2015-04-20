@@ -14,9 +14,12 @@ app.controller('WaitingRoomCtrl', function($scope, $state, GamePlay) {
 	$scope.allJoined = false;
 
 	$scope.startGame = function() {
+
 		GamePlay.setPlayOrder($scope.currentGame, $scope.currentUsers);
 		GamePlay.setCurrentCard($scope.currentCards);
+
 		$state.go('^.gameRoom');
+
 	};
 
 	$scope.enterGameRoom = function() {
@@ -24,9 +27,11 @@ app.controller('WaitingRoomCtrl', function($scope, $state, GamePlay) {
 	};
 
 	$scope.$watch('currentGame.status', function(newStatus, oldStatus) {
+
 		if (newStatus === 'playing' && oldStatus === 'waiting') {
 			$scope.allJoined = true;
 		}
+
 	});
 
 });

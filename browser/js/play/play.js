@@ -28,39 +28,7 @@ app.controller('PlayCtrl', function($scope, $state, $q, $firebaseObject, GameSet
 
     $scope.enterWaitingRoom = function(gameForm) {
 
-		GameSetup.doesGameExist(gameForm.gameId)
-		.then(function(gameExists) {
-			if ($scope.formType === 'join') {
-				if (!gameExists) {
-					throw 'Game ID does not exist.';
-				}
-				else {
-					var playing = GameSetup.gameInProgress(gameForm.gameId);
-
-					if (playing) throw 'Game is already in progress.';
-					else {
-						var loadPromises = [
-							GameSetup.loadChat(gameForm.gameId),
-							GameSetup.loadGame(gameForm.gameId)
-						];
-
-						return $q.all(loadPromises);
-					}
-				}
-			}
-			else {
-				var createAndLoadPromises = [
-					GameSetup.createAndLoadChat(gameForm.gameId),
-					GameSetup.createAndLoadGame(gameForm.gameId)
-				];
-
-				return $q.all(createAndLoadPromises);
-			}
-		})
-		.then(function() {
-			if (!gameForm.username) throw 'Please enter a valid username.';
-			return GameSetup.addUserToGame(gameForm.gameId, gameForm.username);
-		})
+		GameSetup.prepareGame(gameForm, $scope.formType)
 		.then(function() {
 			$state.go('game.waitingRoom', { gameId: gameForm.gameId });
 		})

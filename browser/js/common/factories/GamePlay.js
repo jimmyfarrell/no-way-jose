@@ -12,17 +12,17 @@ app.factory('GamePlay', function() {
 
 		delete currentCards.cardDeck[randomCard];
 
-		function getRandomCard(cardDeck) {
-			var randomCard;
-			var count = 0;
+	};
 
-			for (var card in cardDeck) {
-				if (Math.random() < 1/++count) randomCard = card;
-			}
+	var getRandomCard = function (cardDeck) {
+		var randomCard;
+		var count = 0;
 
-			return randomCard;
+		for (var card in cardDeck) {
+			if (Math.random() < 1/++count) randomCard = card;
 		}
 
+		return randomCard;
 	};
 
 	var setPlayOrder = function(currentGame, currentUsers) {
@@ -34,13 +34,18 @@ app.factory('GamePlay', function() {
 
 		var orderArr = [];
 		var activePlayer = '';
+
 		for (var i = 0; i < playerCount; i++) orderArr[i] = i + 1;
+
 		angular.forEach(currentUsers, function(userInfo, user) {
+
 			if (user.indexOf('$') < 0) {
-				var orderIndex = Math.floor(Math.random() * orderArr.length);
+				let orderIndex = Math.floor(Math.random() * orderArr.length);
+
 				if (orderArr[orderIndex] === 1) activePlayer = userInfo.username;
 				userInfo.order = orderArr.splice(orderIndex, 1)[0];
 			}
+
 		});
 
 		currentGame.playerCount = playerCount;
@@ -51,21 +56,19 @@ app.factory('GamePlay', function() {
 
 	var setActivePlayer = function(currentGame, currentUsers) {
 
-		console.log('in here')
+		var activePlayer = '';
 		var newOrder = currentUsers[currentGame.activePlayer].order + 1;
-		console.log(currentGame.activePlayer)
+
 		if (newOrder > currentGame.playerCount) newOrder = 1;
 
-		var activePlayer = '';
 		angular.forEach(currentUsers, function(userInfo, user) {
-			if (user.indexOf('$') < 0) {
-				if (userInfo.order === newOrder) {
-					activePlayer = userInfo.username;
-				}
+
+			if (user.indexOf('$') < 0 && userInfo.order === newOrder) {
+				activePlayer = userInfo.username;
 			}
+
 		});
 
-		console.log(activePlayer)
 		currentGame.activePlayer = activePlayer;
 
 	};

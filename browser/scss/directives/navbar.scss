@@ -3,10 +3,11 @@ navbar {
   display: block;
   background: #a1a1a1;
 
-  fullstack-logo {
-    padding-top: 10px;
-    margin-right: 20px;
-    width: 30px;
+  .navbar-header {
+	  float: right;
+	  .navbar-brand {
+		  float: right;
+	  }
   }
 
   a {
@@ -31,8 +32,13 @@ navbar {
   }
 
   .login-button {
-    float: right;
-    margin-top: 8px;
+    float: left;
+	margin: 8px 5px 0 5px;
+  }
+
+  .sidebar-btn {
+	float: left;
+	margin: 8px 5px 0 5px;
   }
 
   .welcome {

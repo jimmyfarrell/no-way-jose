@@ -31,7 +31,7 @@ gulp.task('reloadCSS', function () {
 
 gulp.task('lintJS', function () {
     return gulp.src(['./browser/js/**/*.js', './server/**/*.js'])
-        .pipe(jshint())
+        .pipe(jshint({ esnext: true }))
         .pipe(jshint.reporter('jshint-stylish'));
 });
 

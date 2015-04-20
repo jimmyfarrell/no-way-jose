@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <base href="/" />
-    <title>Fullstack Academy Generated Application</title>
+    <title>No Way, Jose!</title>
     <link rel="stylesheet" type="text/css" href="/bootstrap/dist/css/bootstrap.css" />
     <link rel="stylesheet" type="text/css" href="/style.css" />
     <script src="/lodash/lodash.js"></script>
@@ -18,7 +18,9 @@
 </head>
 <body ng-app="FullstackGeneratedApp" ng-controller="MainCtrl">
     <navbar></navbar>
-	<sidebar ng-show="sidebar.show"></sidebar>
-	<div ui-view ng-class="{ 'main-page': sidebar.show, 'no-sidebar': !sidebar.show }"></div>
+	<div class="container" id="main-view">
+		<sidebar ng-show="sidebar.show"></sidebar>
+		<div ui-view ng-class="{ 'main-page': sidebar.show, 'no-sidebar': !sidebar.show }"></div>
+	</div>
 </body>
 </html>

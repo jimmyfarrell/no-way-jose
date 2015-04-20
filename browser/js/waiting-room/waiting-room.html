@@ -1,8 +1,14 @@
-<div ng-if="!allJoined">
-	<h1>Waiting For All Players To Join</h1>
-	<button ng-click="startGame()">All Players Have Joined</button>
-</div>
-<div ng-if="allJoined">
-	<h1>All Players Have Joined</h1>
-	<button ng-click="enterGameRoom()">Enter Game Room</button>
+<div>
+	<section id="waiting-room">
+		<div ng-if="!allJoined">
+			<h1>Waiting For All Players To Join</h1>
+			<p>Once <strong>all players</strong> have joined, enter the game room.</p>
+			<button ng-click="startGame()">Enter Game Room</button>
+		</div>
+		<div ng-if="allJoined">
+			<h1>All Players Have Joined</h1>
+			<p>You may now proceed to the game room.</p>
+			<button ng-click="enterGameRoom()">Enter Game Room</button>
+		</div>
+	</section>
 </div>

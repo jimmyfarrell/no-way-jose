@@ -4,8 +4,8 @@
 
 <div ng-if="currentGame.activePlayer === currentUser.username">
 	<h1>Take This Card?</h1>
-	<button ng-click="takeCard()">Yup!</button>
-	<button ng-click="placeCoin()">No Way, Jose!</button>
+	<button ng-click="acceptCard()">Yup!</button>
+	<button ng-click="declineCard()">No Way, Jose!</button>
 </div>
 
 <h2>Your Coins: {{ currentUser.coins }}</h2>

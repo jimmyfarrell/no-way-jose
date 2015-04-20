@@ -1,6 +1,10 @@
-<div>
-	<ul>
-		<li ng-repeat="user in users | orderObjectBy:'order':false:currentGame.status">
-		<span ng-if="currentGame.status === 'playing'">Player {{ user.order }} - </span>{{ user.username }}: <span ng-if="user.cards" ng-repeat="card in user.cards | orderObjectBy:'value'"> {{ card.value }} </span></li>
+<h2>Players In The Room (Game ID: {{ currentGame.gameId }})</h2>
+<div class="user col-xs-2" ng-repeat="user in users | orderObjectBy:'order':false:currentGame.status">
+	<h2 ng-show="currentGame.status === 'playing'">{{ user.order | ordinal }}</h2>
+	<h2>{{ user.username }}</h2>
+	<ul ng-if="groupedCards">
+		<div class="card-group" ng-repeat="group in groupedCards | orderBy">
+			<li ng-repeat="card in group"> {{ card }} </li>
+		</div>
 	</ul>
 </div>

@@ -1,7 +1,7 @@
 <div>
 	<ul>
 		<li ng-repeat="message in currentChat" ng-class="{ 'system-message': message.system }">
-		<strong>{{ message.username }}:</strong> {{ message.text }}
+		<span ng-if="!message.system"><strong>{{ message.username }}:</strong> </span>{{ message.text }}
 		</li>
 	</ul>
 </div>

@@ -2,7 +2,7 @@
 app.factory('Sidebar', function() {
 
 	var sidebar = {
-		show: true
+		show: false
 	};
 
 	return {

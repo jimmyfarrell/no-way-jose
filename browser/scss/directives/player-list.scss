@@ -1,0 +1,20 @@
+player-list {
+	h3 {
+		margin-top: 7px;
+	}
+	ul {
+		padding-left: 0;
+		list-style-type: none;
+	}
+	.user {
+		text-align: center;
+		h2 {
+			font-size: 18px;
+			margin-top: 5px;
+		}
+		.card-group {
+			border: 1px solid black;
+			margin: 5px 0;
+		}
+	}
+}
