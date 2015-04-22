@@ -20,13 +20,13 @@ navbar {
   .nav > li > a {
     cursor: pointer;
     &.active {
-      color: #f30046;
+      color: #A0DAF7;
     }
     &:hover {
       transition: color 0.2s;
     }
     &:focus {
-      color: #f30046;
+      color: #A0DAF7;
       background: transparent;
     }
   }
