@@ -1,4 +1,5 @@
 module.exports = {
+  "FIREBASE_URL": "https://dazzling-torch-382.firebaseio.com",
   "DATABASE_URI": "mongodb://localhost:27017/no-way-jose",
   "SESSION_SECRET": "Optimus Prime is my real dad",
   "TWITTER": {

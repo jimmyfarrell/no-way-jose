@@ -30,7 +30,6 @@ app.directive('playerList', function(GameSetup) {
 			});
 
 			var groupCards = function(userCards) {
-				console.log('userCards', userCards)
 				var groupedCards = [];
 
 				while (userCards.length > 1) {
@@ -39,18 +38,14 @@ app.directive('playerList', function(GameSetup) {
 					group.push(searchValue);
 
 					while (userCards.length && userCards[0] - searchValue === 1) {
-						console.log('searchValue', searchValue)
 						searchValue = userCards.shift();
 						group.push(searchValue);
 					}
 
-					console.log('group', group)
 					groupedCards.push(group);
 				}
 
-				console.log('userCards 2', userCards)
 				if (userCards.length) groupedCards.push(userCards);
-				console.log(groupedCards)
 
 				return groupedCards;
 			};
@@ -65,5 +60,5 @@ app.filter('ordinal', function() {
 		var s = ["th", "st", "nd", "rd"],
 			v = input % 100;
 		return input + ( s[(v - 20) % 10] || s[v] || s[0]);
-	}
+	};
 });

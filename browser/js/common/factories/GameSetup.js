@@ -1,16 +1,34 @@
 'use strict';
 
-app.factory('GameSetup', function($q, $firebaseObject) {
+app.factory('GameSetup', function($http, $q, $firebaseObject) {
 
-    const gamesRef = new Firebase('https://dazzling-torch-382.firebaseio.com/games');
-    const cardsRef = new Firebase('https://dazzling-torch-382.firebaseio.com/cards');
-    const usersRef = new Firebase('https://dazzling-torch-382.firebaseio.com/users');
-	const chatsRef = new Firebase('https://dazzling-torch-382.firebaseio.com/chats');
+	var gamesRef,
+		cardsRef,
+		usersRef,
+		chatsRef;
 
-	var allGames = $firebaseObject(gamesRef);
-	var allCards = $firebaseObject(cardsRef);
-	var allUsers = $firebaseObject(usersRef);
-	var allChats = $firebaseObject(chatsRef);
+	var allGames,
+		allCards,
+		allUsers,
+		allChats;
+
+	var getFirebaseUrl = function() {
+		$http.get('/api/firebase').success(function(firebaseUrl) {
+
+			gamesRef = new Firebase(`${ firebaseUrl }/games`);
+			cardsRef = new Firebase(`${ firebaseUrl }/cards`);
+			usersRef = new Firebase(`${ firebaseUrl }/users`);
+			chatsRef = new Firebase(`${ firebaseUrl }/chats`);
+
+			allGames = $firebaseObject(gamesRef);
+			allCards = $firebaseObject(cardsRef);
+			allUsers = $firebaseObject(usersRef);
+			allChats = $firebaseObject(chatsRef);
+
+		});
+	};
+
+	getFirebaseUrl();
 
     var current = {};
 

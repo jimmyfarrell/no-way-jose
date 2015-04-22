@@ -7,6 +7,7 @@
  */
 
 module.exports = {
+	"FIREBASE_URL": process.env.FIREBASE_URL,
     "DATABASE_URI": process.env.MONGOLAB_URI,
     "SESSION_SECRET": process.env.SESSION_SECRET,
     "TWITTER": {
