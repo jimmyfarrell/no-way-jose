@@ -13,8 +13,16 @@ app.controller('GameRoomCtrl', function($scope, GamePlay) {
 
 	$scope.$watch('currentGame.status', function(newStatus, oldStatus) {
 		if (newStatus === 'finished') {
-			GamePlay.calculateResults($scope.currentUsers);
+			$scope.allPoints = GamePlay.calculateResults($scope.currentUsers);
 		}
+	});
+
+	$scope.$watch('currentCards.currentCard', function(newCard, oldCard) {
+		var cardCount = 0;
+		angular.forEach($scope.currentCards.cardDeck, function(cardInfo, card) {
+			cardCount++;
+		});
+		$scope.cardCount = cardCount;
 	});
 
 	$scope.acceptCard = function() {
@@ -28,7 +36,14 @@ app.controller('GameRoomCtrl', function($scope, GamePlay) {
 		$scope.currentUser.cards[$scope.currentCards.currentCard.value] =
 			$scope.currentCards.currentCard;
 
-		if (Object.keys($scope.currentCards.cardDeck).length === 0) {
+		var timestamp = Date.now();
+		$scope.currentChat[timestamp] = {
+			system: true,
+			text: `${ $scope.currentUser.username } took card ${ $scope.currentCards.currentCard.value }`,
+			timestamp
+		};
+
+		if ($scope.cardCount === 0) {
 			$scope.currentGame.status = 'finished';
 			return;
 		}

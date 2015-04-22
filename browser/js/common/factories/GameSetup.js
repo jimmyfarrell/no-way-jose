@@ -49,8 +49,10 @@ app.factory('GameSetup', function($http, $q, $firebaseObject) {
 				else {
 
 					var playing = gameInProgress(gameForm.gameId);
+					var maxPlayers = maxPlayersReached(gameForm.gameId);
 
 					if (playing) throw 'Game is already in progress.';
+					else if (maxPlayers) throw 'Max player limit reached.';
 					else {
 
 						var loadPromises = [
@@ -68,7 +70,7 @@ app.factory('GameSetup', function($http, $q, $firebaseObject) {
 
 				var createAndLoadPromises = [
 					createAndLoadChat(gameForm.gameId),
-					createAndLoadGame(gameForm.gameId)
+					createAndLoadGame(gameForm)
 				];
 
 				return $q.all(createAndLoadPromises);
@@ -96,6 +98,10 @@ app.factory('GameSetup', function($http, $q, $firebaseObject) {
 
 	var gameInProgress = function(gameId) {
 		return allGames[gameId].status === 'playing';
+	};
+
+	var maxPlayersReached = function(gameId) {
+		return allGames[gameId].playerCount === 5;
 	};
 
 	var loadChat = function(gameId) {
@@ -151,34 +157,35 @@ app.factory('GameSetup', function($http, $q, $firebaseObject) {
 
 	};
 
-    var createAndLoadGame = function(gameId) {
+    var createAndLoadGame = function(gameForm) {
 
 		var gamesAndCardsPromises = [];
 
         var newGame = {
+			creator: gameForm.username,
 			status: 'waiting',
 			playerCount: 0,
 			activePlayer: null,
-			gameId,
+			gameId: gameForm.gameId,
 			startTime: Firebase.ServerValue.TIMESTAMP
 		};
 
-		allGames[gameId] = newGame;
+		allGames[gameForm.gameId] = newGame;
 		allGames.$save()
 		.then(function(gamesRef) {
 
-			current.game = $firebaseObject(gamesRef.child(gameId));
+			current.game = $firebaseObject(gamesRef.child(gameForm.gameId));
 			gamesAndCardsPromises.push(current.game.$loaded());
 
 		});
 
         var newCards = { cardDeck: createCardDeck() };
 
-		allCards[gameId] = newCards;
+		allCards[gameForm.gameId] = newCards;
 		allCards.$save()
 		.then(function(cardsRef) {
 
-			current.cards = $firebaseObject(cardsRef.child(gameId));
+			current.cards = $firebaseObject(cardsRef.child(gameForm.gameId));
 			gamesAndCardsPromises.push(current.cards.$loaded());
 
 		});
@@ -186,7 +193,7 @@ app.factory('GameSetup', function($http, $q, $firebaseObject) {
 		return $q.all(gamesAndCardsPromises)
 		.then(function() {
 
-			return loadGame(gameId);
+			return loadGame(gameForm.gameId);
 
 		});
 
