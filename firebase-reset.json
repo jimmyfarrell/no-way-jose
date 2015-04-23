@@ -1,0 +1,106 @@
+{
+  "cards" : {
+    "r6anc" : {
+      "cardDeck" : [ null, null, null, {
+        "coins" : 0,
+        "value" : 3
+      }, {
+        "coins" : 0,
+        "value" : 4
+      }, {
+        "coins" : 0,
+        "value" : 5
+      }, null, {
+        "coins" : 0,
+        "value" : 7
+      }, {
+        "coins" : 0,
+        "value" : 8
+      }, {
+        "coins" : 0,
+        "value" : 9
+      }, {
+        "coins" : 0,
+        "value" : 10
+      }, null, null, null, {
+        "coins" : 0,
+        "value" : 14
+      }, null, {
+        "coins" : 0,
+        "value" : 16
+      }, {
+        "coins" : 0,
+        "value" : 17
+      }, {
+        "coins" : 0,
+        "value" : 18
+      }, {
+        "coins" : 0,
+        "value" : 19
+      }, null, {
+        "coins" : 0,
+        "value" : 21
+      }, {
+        "coins" : 0,
+        "value" : 22
+      }, null, {
+        "coins" : 0,
+        "value" : 24
+      }, {
+        "coins" : 0,
+        "value" : 25
+      }, null, {
+        "coins" : 0,
+        "value" : 27
+      }, {
+        "coins" : 0,
+        "value" : 28
+      }, {
+        "coins" : 0,
+        "value" : 29
+      }, {
+        "coins" : 0,
+        "value" : 30
+      }, {
+        "coins" : 0,
+        "value" : 31
+      }, {
+        "coins" : 0,
+        "value" : 32
+      }, {
+        "coins" : 0,
+        "value" : 33
+      }, null, {
+        "coins" : 0,
+        "value" : 35
+      } ]
+    }
+  },
+  "chats" : {
+    "r6anc" : {
+      "1429681432511" : {
+        "system" : true,
+        "text" : "Welcome to the chat room. You can chat while waiting for your friends to join and while playing the game.",
+        "timestamp" : 1429681432511
+      }
+    }
+  },
+  "games" : {
+    "r6anc" : {
+      "creator" : "jimmy",
+      "gameId" : "r6anc",
+      "playerCount" : 1,
+      "startTime" : 1429681432601,
+      "status" : "waiting"
+    }
+  },
+  "users" : {
+    "r6anc" : {
+      "jimmy" : {
+        "coins" : 11,
+        "order" : 0,
+        "username" : "jimmy"
+      }
+    }
+  }
+}

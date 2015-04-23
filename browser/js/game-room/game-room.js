@@ -11,11 +11,28 @@ app.config(function($stateProvider) {
 
 app.controller('GameRoomCtrl', function($scope, GamePlay) {
 
-	$scope.$watch('currentGame.status', function(newStatus, oldStatus) {
-		if (newStatus === 'finished') {
-			$scope.allPoints = GamePlay.calculateResults($scope.currentUsers);
-		}
+	$scope.$watch('currentUsers', function(newUsers, oldUsers) {
+		var takenCardsCount = 0;
+
+		angular.forEach(newUsers, function(userInfo, user) {
+
+			if (user.indexOf('$') < 0) {
+				angular.forEach(userInfo.cards, function(cardInfo, cards) {
+					takenCardsCount++;
+				});
+			}
+
+		});
+
+		if (takenCardsCount === 24) $scope.allPoints = GamePlay.calculateResults(newUsers);
+
 	});
+
+	// $scope.$watch('currentGame.status', function(newStatus, oldStatus) {
+		// if (newStatus === 'finished') {
+			// $scope.allPoints = GamePlay.calculateResults($scope.currentUsers);
+		// }
+	// });
 
 	$scope.$watch('currentCards.currentCard', function(newCard, oldCard) {
 		var cardCount = 0;
