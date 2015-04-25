@@ -9,7 +9,7 @@ app.config(function($stateProvider) {
 
 });
 
-app.controller('GameRoomCtrl', function($scope, GamePlay) {
+app.controller('GameRoomCtrl', function($scope, $timeout, GamePlay) {
 
 	$scope.$watch('currentUsers', function(newUsers, oldUsers) {
 		var takenCardsCount = 0;
@@ -24,15 +24,37 @@ app.controller('GameRoomCtrl', function($scope, GamePlay) {
 
 		});
 
-		if (takenCardsCount === 24) $scope.allPoints = GamePlay.calculateResults(newUsers);
+		if (takenCardsCount === 24) {
+
+            var allPoints = GamePlay.calculateResults(newUsers);
+            var winners = [];
+
+            allPoints.forEach(function(user) {
+
+                if (!winners.length || winners[0].points === user.points) {
+                    winners.push(user);
+                }
+                else if (winners[0].points > user.points) {
+                    winners = [user];
+                }
+
+            });
+
+            if (winners.length > 1) $scope.tie = true;
+
+            var winningPoints = winners[0].points;
+            var nonWinners = allPoints.filter(function(user) {
+                return user.points > winningPoints;
+            });
+
+            console.log('nonWinners', nonWinners)
+            console.log('winners', winners)
+            $scope.winners = winners;
+            $scope.nonWinners = nonWinners;
+
+        }
 
 	});
-
-	// $scope.$watch('currentGame.status', function(newStatus, oldStatus) {
-		// if (newStatus === 'finished') {
-			// $scope.allPoints = GamePlay.calculateResults($scope.currentUsers);
-		// }
-	// });
 
 	$scope.$watch('currentCards.currentCard', function(newCard, oldCard) {
 		var cardCount = 0;
@@ -44,14 +66,14 @@ app.controller('GameRoomCtrl', function($scope, GamePlay) {
 
 	$scope.acceptCard = function() {
 
-		$scope.currentUser.coins =
-			Number($scope.currentUser.coins) +
-			Number($scope.currentCards.currentCard.coins);
-
 		if (!$scope.currentUser.cards) $scope.currentUser.cards = {};
 
 		$scope.currentUser.cards[$scope.currentCards.currentCard.value] =
 			$scope.currentCards.currentCard;
+
+		$scope.currentUser.coins =
+			Number($scope.currentUser.coins) +
+			Number($scope.currentCards.currentCard.coins);
 
 		var timestamp = Date.now();
 		$scope.currentChat[timestamp] = {
@@ -66,6 +88,10 @@ app.controller('GameRoomCtrl', function($scope, GamePlay) {
 		}
 
 		GamePlay.setCurrentCard($scope.currentCards);
+        $scope.pleaseWait = true;
+        $timeout(function() {
+            $scope.pleaseWait = false;
+        }, 3000);
 
 	};
 

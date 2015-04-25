@@ -6,22 +6,27 @@
 		<current-card></current-card>
 		<div ng-if="currentGame.activePlayer === currentUser.username">
 			<div ng-if="currentUser.coins">
-				<h1>Take This Card?</h1>
-				<button ng-click="acceptCard()">Yup!</button>
-				<button ng-show="currentUser.coins" ng-click="declineCard()">No Way, Jose!</button>
+                <h1>Take This Card?</h1>
+                <button ng-if="!pleaseWait" ng-click="acceptCard()">Yup!</button>
+                <button ng-if="!pleaseWait" ng-show="currentUser.coins" ng-click="declineCard()">No Way, Jose!</button>
 			</div>
 			<div ng-if="currentUser.coins === 0">
-				<h1>You Must Take This Card</h1>
-				<button ng-click="acceptCard()">Okay... fine!</button>
+                <h1>You Must Take This Card</h1>
+                <button ng-if="!pleaseWait" ng-click="acceptCard()">Okay... fine!</button>
 			</div>
+            <button ng-if="pleaseWait">Please Wait...</button>
 		</div>
 
 		<h2>Your Coins: {{ currentUser.coins }}</h2>
 	</div>
 	<div class="scores" ng-if="currentGame.status === 'finished'">
 		<h1>Final Scores</h1>
+        <h2 ng-if="tie">Tie Game!</h2>
+        <ul>
+            <li class="winner" ng-repeat="user in winners">WINNER! {{ user.username }}: {{ user.points }} points</li>
+        </ul>
 		<ul>
-			<li ng-class="{ winner: $first }"ng-repeat="user in allPoints | orderObjectBy:'points'"><span ng-if="$first">WINNER! </span>{{ user.username }}: {{ user.points }} points</li>
+			<li ng-repeat="user in nonWinners | orderBy:'points'">{{ user.username }}: {{ user.points }} points</li>
 		</ul>
 	</div>
 </section>

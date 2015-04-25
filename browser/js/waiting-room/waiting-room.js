@@ -9,7 +9,7 @@ app.config(function($stateProvider) {
 
 });
 
-app.controller('WaitingRoomCtrl', function($scope, $state, GamePlay) {
+app.controller('WaitingRoomCtrl', function($scope, $state, $timeout, GamePlay) {
 
 	$scope.allJoined = false;
 
@@ -18,7 +18,9 @@ app.controller('WaitingRoomCtrl', function($scope, $state, GamePlay) {
 		GamePlay.setPlayOrder($scope.currentGame, $scope.currentUsers);
 		GamePlay.setCurrentCard($scope.currentCards);
 
-		$state.go('^.gameRoom');
+		$timeout(function() {
+            $state.go('^.gameRoom');
+        }, 1000);
 
 	};
 
@@ -27,6 +29,11 @@ app.controller('WaitingRoomCtrl', function($scope, $state, GamePlay) {
 	};
 
 	$scope.$watch('currentUsers', function(newUsers, oldUsers) {
+
+        $scope.newPlayerJoined = true;
+        $timeout(function() {
+            $scope.newPlayerJoined = false;
+        }, 2000);
 
 		var playerCount = 0;
 

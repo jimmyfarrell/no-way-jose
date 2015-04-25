@@ -75,19 +75,21 @@ app.factory('GamePlay', function() {
 
 	var calculateResults = function(currentUsers) {
 
-		var allPoints = {};
+		var allPoints = [];
 		angular.forEach(currentUsers, function(userInfo, user) {
 
 			if (user.indexOf('$') < 0) {
 				var userPoints = 0;
-				angular.forEach(userInfo.groupedCards, function(group) {
-					userPoints += parseInt(group[0]);
-				});
+				if (userInfo.groupedCards) {
+                    angular.forEach(userInfo.groupedCards, function(group) {
+                        userPoints += parseInt(group[0]);
+                    });
+                }
 				userPoints -= userInfo.coins;
-				allPoints[user] = {
+				allPoints.push({
 					username: userInfo.username,
 					points: userPoints
-				};
+				});
 			}
 
 		});
