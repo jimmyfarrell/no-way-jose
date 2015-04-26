@@ -13,31 +13,37 @@
 @import 'directives/main';
 @import 'home/main';
 @import 'login/main';
-@import 'play/main';
 @import 'waiting-room/main';
 @import 'game-room/main';
 
 body, html {
-  overflow: hidden;
-  height:100%;
+    background: #B0E7CF;
+    @media (min-width: 1080px) {
+        overflow: hidden;
+        height:100%;
+    }
 }
 
 .main-page {
-	text-align: center;
-	position: absolute;
-	top: 51px;
-	bottom: 0;
-	right: 0;
-	overflow-y: scroll;
-	width: 67%;
+    text-align: center;
+    @media (min-width: 1080px) {
+        position: absolute;
+        top: 51px;
+        bottom: 0;
+        right: 0;
+        overflow-y: scroll;
+        width: 67%;
+    }
 }
 
 .no-sidebar {
-	text-align: center;
-	position: absolute;
-	top: 51px;
-	bottom: 0;
-	right: 0;
-	overflow-y: scroll;
-	width: 100%;
+    text-align: center;
+    @media (min-width: 1080px) {
+        position: absolute;
+        top: 51px;
+        bottom: 0;
+        right: 0;
+        overflow-y: scroll;
+        width: 100%;
+    }
 }

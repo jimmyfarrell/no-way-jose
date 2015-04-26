@@ -1,17 +1,15 @@
-<div>
-	<section id="waiting-room">
-		<div ng-if="!allJoined">
-			<h1>Waiting For All Players To Join</h1>
-			<p ng-if="playerCount < 3">Game Requires At Least 3 Players (Max 5 Players)</p>
-			<p ng-if="currentGame.creator !== currentUser.username">Once <strong>all players</strong> have joined and <strong>{{ currentGame.creator }}</strong> starts the game, you may enter the game room.</p>
-			<p ng-if="currentGame.creator === currentUser.username">Once <strong>all players</strong> have joined, please start the game.</p>
-            <button ng-if="newPlayerJoined && playerCount > 2 && currentGame.creator === currentUser.username">New Player Joined, Please Wait...</button>
-			<button ng-if="!newPlayerJoined && playerCount > 2 && currentGame.creator === currentUser.username" ng-click="startGame()">Start The Game</button>
-		</div>
-		<div ng-if="currentGame.creator !== currentUser.username && allJoined">
-			<h1>All Players Have Joined, And {{ currentGame.creator }} Has Started The Game</h1>
-			<p>Please proceed to the game room.</p>
-			<button ng-click="enterGameRoom()">Enter Game Room</button>
-		</div>
-	</section>
-</div>
+<section id="waiting-room">
+    <div ng-if="!allJoined">
+        <h1>Waiting For All Players To Join</h1>
+        <p ng-if="playerCount < 3">3-5 players required.</p>
+        <p ng-if="currentGame.creator !== currentUser.username">Once <strong>all players</strong> have joined and <strong>{{ currentGame.creator }}</strong> starts the game, you may enter the game room.</p>
+        <p ng-if="currentGame.creator === currentUser.username">Once <strong>all players</strong> have joined, please start the game.</p>
+        <button ng-if="newPlayerJoined && playerCount > 2 && currentGame.creator === currentUser.username">New Player Joined, Please Wait...</button>
+        <button ng-if="!newPlayerJoined && playerCount > 2 && currentGame.creator === currentUser.username" ng-click="startGame()">Start The Game</button>
+    </div>
+    <div ng-if="currentGame.creator !== currentUser.username && allJoined">
+        <h1>All Players Have Joined, And {{ currentGame.creator }} Has Started The Game</h1>
+        <p>Please proceed to the game room.</p>
+        <button ng-click="enterGameRoom()">Enter Game Room</button>
+    </div>
+</section>

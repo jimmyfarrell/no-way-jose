@@ -1,13 +1,57 @@
 chat-room {
+    #chatbox {
+        border: 1px solid #4BB487;
+        margin-top: 2vh;
+        @media (min-width: 1080px) {
+            margin-top: -130px;
+        }
+    }
+    #message-list {
+        background: #fff;
+        height: 30vh;
+        font-size: 40px;
+        overflow-y: scroll;
+        @media (min-width: 1080px) {
+            height: 80vh;
+            font-size: 14px;
+        }
+    }
 	ul {
 		text-align: left;
 		list-style-type: none;
+        padding-left: 0;
+        li {
+            padding-left: 5px;
+            padding-right: 5px;
+        }
 	}
 	.even-message {
-		background: #DCDCDC;
+		background: #EDEDED;
 	}
-}
 
-.system-message {
-	font-style: italic;
+    .system-message {
+        font-style: italic;
+    }
+
+    .form-control {
+        width: auto;
+        display: inline;
+        font-size: 60px;
+        height: 100%;
+        @media (min-width: 1080px) {
+            font-size: 14px;
+        }
+    }
+
+    .btn-default {
+        color: #fff;
+        background-color: #0D3A5C;
+        font-size: 60px;
+        @media (min-width: 1080px) {
+            font-size: 14px;
+        }
+    }
+    .input-group {
+        margin-top: 0;
+    }
 }

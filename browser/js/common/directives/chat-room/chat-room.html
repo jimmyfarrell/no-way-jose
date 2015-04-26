@@ -1,11 +1,15 @@
-<div>
-	<ul>
-		<li ng-repeat="message in currentChat" ng-class="{ 'system-message': message.system }" ng-class-even="'even-message'">
-		<span ng-if="!message.system"><strong>{{ message.username }}:</strong> </span>{{ message.text }}
-		</li>
-	</ul>
+<div id="chatbox">
+    <div id="message-list" scroll-glue>
+        <ul>
+            <li ng-repeat="message in currentChat" ng-class="{ 'system-message': message.system }" ng-class-even="'even-message'">
+            <span ng-if="!message.system"><strong>{{ message.username }}:</strong> </span>{{ message.text }}
+            </li>
+        </ul>
+    </div>
 </div>
-<form name="chatForm" ng-submit="sendMessage(messageText)">
-	<input name="text" ng-model="messageText"/>
-	<button>Send</button>
+<form class="input-group">
+    <input type="text" class="form-control" ng-model="messageText">
+    <span class="input-group-btn">
+        <button class="btn btn-default" ng-click="sendMessage(messageText)">Send</button>
+    </span>
 </form>

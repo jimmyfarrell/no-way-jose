@@ -8,8 +8,8 @@ router.get('/firebase', function(req, res) {
 	res.send(FIREBASE_URL);
 });
 
-router.use('/tutorial', require('./tutorial'));
-router.use('/members', require('./members'));
+//router.use('/tutorial', require('./tutorial'));
+//router.use('/members', require('./members'));
 
 // Make sure this is after all of
 // the registered routes!

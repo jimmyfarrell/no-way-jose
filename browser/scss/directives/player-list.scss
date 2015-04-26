@@ -9,7 +9,10 @@ player-list {
 	.user {
 		text-align: center;
 		h2 {
-			font-size: 18px;
+            font-size: 40px;
+            @media (min-width: 1080px) {
+                font-size: 18px;
+            }
 			margin-top: 5px;
 		}
 		.card-group {
@@ -17,4 +20,15 @@ player-list {
 			margin: 5px 0;
 		}
 	}
+
+    &#large-player-list {
+        @media (max-width: 1079px) {
+            display: none;
+        }
+    }
+    &#small-player-list {
+        @media (min-width: 1080px) {
+            display: none;
+        }
+    }
 }

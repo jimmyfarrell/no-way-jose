@@ -144,7 +144,7 @@ app.factory('GameSetup', function($http, $q, $firebaseObject) {
 
 		firstMessage[timestamp] = {
 			system: true,
-			text: 'Welcome to the chat room. You can chat while waiting for your friends to join and while playing the game.',
+			text: 'Welcome to the chat room.',
 			timestamp: Date.now()
 		};
 
