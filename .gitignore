@@ -7,3 +7,4 @@ public
 *.swo
 *.swp
 THE-REMAINING.txt
+*/server/env/development.js
