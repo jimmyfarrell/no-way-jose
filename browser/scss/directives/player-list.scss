@@ -2,23 +2,70 @@ player-list {
 	h3 {
 		margin-top: 7px;
 	}
+    h2 {
+        font-size: 50px;
+        @media (min-width: 1080px) {
+            font-size: 25px;
+        }
+    }
 	ul {
+        font-size: 20px;
 		padding-left: 0;
 		list-style-type: none;
+        li {
+            display: inline;
+            @media (min-width: 1080px) {
+                display: block;
+            }
+        }
+        @media (min-width: 1080px) {
+            font-size: 14px;
+        }
 	}
 	.user {
 		text-align: center;
 		h2 {
-            font-size: 40px;
+            font-size: 50px;
             @media (min-width: 1080px) {
                 font-size: 18px;
             }
 			margin-top: 5px;
 		}
+        .play-order {
+            display: inline;
+            .colon {
+                @media (min-width: 1080px) {
+                    display: none;
+                }
+            }
+            @media (min-width: 1080px) {
+                display: block;
+            }
+        }
+        .username {
+            margin-top: 10px;
+            margin-bottom: 20px;
+            display: inline;
+            @media (min-width: 1080px) {
+                margin-top: 5px;
+                margin-bottom: 10px;
+                display: block;
+            }
+        }
 		.card-group {
-			border: 1px solid black;
-			margin: 5px 0;
+			margin: 5px;
+            padding: 3px;
+            display: inline;
+            @media (min-width: 1080px) {
+                display: block;
+            }
 		}
+        .grouped {
+            border: 3px solid #000;
+        }
+        .single-card {
+
+        }
 	}
 
     &#large-player-list {

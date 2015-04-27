@@ -1,5 +1,22 @@
 #waiting-room {
+    h1 {
+        font-size: 60px;
+        @media (min-width: 1080px) {
+            font-size: 36px;
+        }
+    }
 	p {
-		font-size: 20px;
+        font-size: 35px;
+        @media (min-width: 1080px) {
+            font-size: 20px;
+        }
 	}
+    .btn-default {
+        font-size: 50px;
+        color: #fff;
+        background-color: #0D3A5C;
+        @media (min-width: 1080px) {
+            font-size: 14px;
+        }
+    }
 }
